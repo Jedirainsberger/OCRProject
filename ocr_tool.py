@@ -1,7 +1,6 @@
 import pytesseract
+from pyvirtualdisplay.smartdisplay import SmartDisplay  # Added import
 import openai
-import pyautogui
-# logging import removed
 from PIL import Image
 from PIL import ImageGrab
 from superagi.tools.base_tool import BaseTool
@@ -12,6 +11,11 @@ import time
 import numpy as np
 import cv2
 from screeninfo import get_monitors
+
+disp = SmartDisplay(visible=0, size=(800, 600))
+disp.start()
+
+import pyautogui  # Now you can import pyautogui
 
 class OCRInput(BaseModel):
     image_path: str = Field(..., description="Path to the image to be processed")
@@ -48,7 +52,7 @@ class OCRTool(BaseTool):
 
         # Use GPT-3 to generate text
         openai.api_key = 'your-openai-api-key'
-        response = openai.Completion.create(engine="gpt-4", prompt=text, max_tokens=100)
+        response = openai.Completion.create(engine="text-davinci-003", prompt=text, max_tokens=100)
 
         # Simulate typing the generated text
         for char in response.choices[0].text.strip():
