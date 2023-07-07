@@ -1,21 +1,22 @@
+import pytesseract
+from PIL import Image
 from superagi.tools.base_tool import BaseTool
 from pydantic import BaseModel, Field
 from typing import Type
 
-
 class OCRInput(BaseModel):
-    greetings: str = Field(..., description="Greeting message to be sent")
-
+    image_path: str = Field(..., description="Path to the image to be processed")
 
 class OCRTool(BaseTool):
     """
-    Greetings Tool
+    OCR Tool
     """
-    name: str = "Greetings Tool"
-    args_schema: Type[BaseModel] = GreetingsInput
-    description: str = "Sends a Greeting Message"
+    name: str = "OCR Tool"
+    args_schema: Type[BaseModel] = OCRInput
+    description: str = "Performs OCR on an image"
 
-    def _execute(self, greetings: str = None):
-        from_name = self.get_tool_config('FROM')
-        greetings_str = greetings + "\n" + from_name
+    def _execute(self, image_path: str = None):
+        image = Image.open(image_path)
+        text = pytesseract.image_to_string(image)
+        return text
         return greetings_str
