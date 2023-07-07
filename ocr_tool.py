@@ -1,7 +1,7 @@
 import pytesseract
 import openai
 import pyautogui
-import logging
+# logging import removed
 from PIL import Image
 from PIL import ImageGrab
 from superagi.tools.base_tool import BaseTool
@@ -25,36 +25,30 @@ class OCRTool(BaseTool):
     args_schema: Type[BaseModel] = OCRInput
     description: str = "Performs OCR on an image"
     
+    # logger initialization removed
     def __init__(self):
-        self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.INFO)
-        handler = logging.StreamHandler()
-        handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
-        self.logger.addHandler(handler)
+        pass
 
     def _execute(self, image_path: str = None, language: str = 'eng'):
         # Check if the image file exists
         if not os.path.isfile(image_path):
-            self.logger.error("File does not exist")
             return "Error: File does not exist"
 
         try:
             # Open the image file
             image = Image.open(image_path)
         except Exception as e:
-            self.logger.error(f"Unable to open image file: {e}")
             return f"Error: Unable to open image file: {e}"
 
         # Perform OCR on the image
         try:
             text = pytesseract.image_to_string(image, lang=language)  
         except Exception as e:
-            self.logger.error(f"Unable to perform OCR: {e}")
             return f"Error: Unable to perform OCR: {e}"
 
         # Use GPT-3 to generate text
         openai.api_key = 'your-openai-api-key'
-        response = openai.Completion.create(engine="text-davinci-003", prompt=text, max_tokens=100)
+        response = openai.Completion.create(engine="gpt-4", prompt=text, max_tokens=100)
 
         # Simulate typing the generated text
         for char in response.choices[0].text.strip():
@@ -68,7 +62,6 @@ class OCRTool(BaseTool):
             pyautogui.moveTo(x, y)
             pyautogui.click()
         except Exception as e:
-            self.logger.error(f"Unable to move mouse and click: {e}")
             return f"Error: Unable to move mouse and click: {e}"
 
     def perform_ocr(self):
