@@ -21,7 +21,7 @@ class OCRInput(BaseModel):
     image_path: str = Field(..., description="Path to the image to be processed")
     language: str = Field('eng', description="Language for OCR")      
 
-class OCRTool(BaseTool):
+class OcrTool(BaseTool):
     """
     OCR Tool
     """
