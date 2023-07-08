@@ -10,3 +10,4 @@ pytesseract
 pyvirtualdisplay==2.2  # Added pyvirtualdisplay
 # Removed logging package as it conflicts with Python's built-in logging module
 pytesseract
+
