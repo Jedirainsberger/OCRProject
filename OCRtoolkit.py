@@ -3,7 +3,7 @@ from superagi.tools.base_tool import BaseToolkit, BaseTool
 from typing import Type, List
 import sys
 import os
-sys.path.insert(0, 'C:\\Users\\andre\\Desktop\\ERR\\superagi\\tools\\OCRProject')
+sys.path.insert(0, '/app/superagi/tools/OCRProject')
 
 from ocr_tool import OcrTool
 
