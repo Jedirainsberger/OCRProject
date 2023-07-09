@@ -12,8 +12,12 @@ from ocr_tool import OcrTool
 class OCRToolkit(BaseToolkit, ABC):
     name: str = "OCR Toolkit"
     description: str = "OCR Tool kit contains all tools related to OCR with GPT-4"
+    organisation_id: int
+    id: int
     
-    def __init__(self):
+    def __init__(self, organisation_id: int, id: int):
+        self.organisation_id = organisation_id
+        self.id = id
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.DEBUG)
 
