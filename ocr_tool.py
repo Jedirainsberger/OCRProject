@@ -29,9 +29,9 @@ class OcrTool(BaseTool):
     args_schema: Type[BaseModel] = OCRInput
     description: str = "Performs OCR on an image"
     
-    # logger initialization removed
     def __init__(self):
-        pass
+        super().__init__()
+    
 
     def _execute(self, image_path: str = None, language: str = 'eng'):
         # Check if the image file exists
